@@ -272,6 +272,38 @@
         </main>
     </div>
 
+  <!--send feedback box-->
+        
+         <!-- Toggle Button -->
+    <button class="feedback-toggle" id="toggleBtn">Send Feedback</button>
+
+    <!-- Feedback Container -->
+    <div class="feedback-container" id="feedbackBox">
+        <h3>Share your thoughts</h3>
+        <form id="feedbackForm">
+            <!-- Email Field -->
+            <input 
+                type="email" 
+                id="userEmail" 
+                class="feedback-input" 
+                placeholder="Your Gmail / Email address" 
+                required 
+                style="margin-bottom: 10px;"
+            >
+            
+            <!-- Message Field -->
+            <textarea 
+                id="userMessage" 
+                class="feedback-input" 
+                placeholder="Type your feedback here..." 
+                required
+            ></textarea>
+            
+            <button type="submit" class="submit-btn" style="width: 100%; margin-top: 10px;">Send to Gmail</button>
+        </form>
+        <div class="status-msg" id="statusMessage"></div>
+    </div>
+    
     <audio id="bg-music" src="background-song.mp3" loop></audio>
 
     <script>
