@@ -863,7 +863,7 @@ search-interface.css*/
 }
 
 .blink-tet {
-  animation: blinker ar infinite;
+  animation: blinker 1.50s infinite;
   color: rgb(0, 255, 149); /* Optional: Makes the text red */
   font-weight: bold;
 }
