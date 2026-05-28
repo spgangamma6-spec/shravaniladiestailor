@@ -1,0 +1,966 @@
+ * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+
+        /* 1. AUTOMATIC INFINITE RAINBOW BACKGROUND */
+        body {
+            background-image: url(natured.jpg);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-attachment:fixed;
+            background-size: cover;
+            min-height: 100vh;
+            animation: infiniteRainbow 12s linear infinite;
+            display: flex;
+            flex-direction: column;
+        }
+
+       
+
+        header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 5%;
+            background: rgb(79, 79, 79);
+            backdrop-filter: blur(15px);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid rgba(0,0,0,0.05);
+        }
+
+        .header-left {
+             display: flex;
+              align-items: center;
+             }
+        .menu-icon {
+             font-size: 30px;
+              cursor: pointer;
+               margin-right: 15px; 
+               display: none;
+             }
+
+        .logo-img {
+             width: 45px; 
+             height: 45px; 
+             border-radius: 50%; 
+             border: 2px solid #3679ff;
+             }
+        .brand-name { 
+            font-weight: bold; 
+            font-size: 22px; 
+            margin-left: 12px; 
+            color: #ffffffe8; 
+        }
+
+        /* 2. NAVIGATION LINKS */
+        .nav-links { 
+            display: flex; 
+            list-style: none;
+             gap: 20px; 
+             align-items: center;
+             }
+        .nav-links li a { 
+            text-decoration: none; 
+            color:  rgba(3, 1, 16, 0.704);; 
+            font-weight: 700; 
+            padding: 10px 18px;
+            border-radius: 8px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        /* 3. THE GLOWING LOGIN BUTTON (Always Glowing) */
+        .login-btn {
+            background: linear-gradient(135deg, #0044ff, #001144);
+            color: #ffd700 !important;
+            border: 2px solid #ffd700;
+            position: relative;
+            z-index: 1;
+            /* This makes the glow move and pulse */
+            animation: superGlow 2s infinite alternate;
+            box-shadow: 0 0 15px #ffd700, 0 0 30px #0044ff;
+            display: none;
+        }
+
+        @keyframes superGlow {
+            0% { 
+                box-shadow: 0 0 10px #ffd700, 0 0 20px #0044ff;
+                transform: scale(1);
+            }
+            100% { 
+                box-shadow: 0 0 25px #ffd700, 0 0 50px #0044ff;
+                transform: scale(1.05);
+            }
+        }
+
+        /* 4. THE JUMPING EFFECT FOR OTHER LINKS */
+        .jumping-link {
+            animation: jump 0.4s infinite alternate, linkRainbow 0.4s infinite linear !important;
+            background: white;
+            border-radius: 10px;
+        }
+
+        @keyframes jump {
+            from { 
+                transform: translateY(0); 
+            }
+            to { 
+                transform: translateY(-12px);
+             }
+        }
+
+        @keyframes linkRainbow {
+            0% { 
+                color: #ff0000; border: 2px solid #ff0000;
+             }
+            50% {
+                 color: #00ff00; border: 2px solid #00ff00; 
+                }
+            100% { 
+                color: #0000ff; border: 2px solid #0000ff;
+             }
+        }
+
+        /* CONTENT AREA */
+        .container {
+             padding: 50px 5%; 
+             text-align: center; 
+             flex: 1;
+        }
+
+        .hero-img { 
+            width: 90%; 
+            max-width: 300px; 
+            border-radius: 180px; 
+            margin-top: 30px; 
+            border: 15px solid rgb(26, 4, 107);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+
+        /* MOBILE MENU */
+        @media (max-width: 850px) {
+            .menu-icon {
+                 display: block;
+                 color: white; 
+                }
+            .nav-links {
+                display: none; 
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(3, 1, 16, 0.704);
+                padding: 30px;
+            }
+            .nav-links.active {
+                 display: flex; 
+                }
+            .nav-links li {
+                 margin: 15px 0;
+                  width: 100%; 
+                  text-align: center; 
+                }
+        }
+
+        * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Main wrapper that hides the overflow slides */
+.slider-container {
+  position: relative;
+  width: 50%;
+  height: 200%;
+  max-width: 800px;
+  margin: 40px auto;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* The long track that moves left/right */
+.slider-track {
+  display: flex;
+  transition: transform 0.4s ease-in-out;
+  width: 100%;
+}
+
+/* Individual slides always scale to match the container width */
+.slide {
+  min-width: 100%;
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Keeps a consistent scale across devices */
+}
+
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: flex;
+  pointer-events: none; /* Prevents default image dragging mechanics */
+}
+
+/* Desktop Navigation Buttons */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  border: none;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s, opacity 0.2s;
+  z-index: 10;
+}
+
+.nav-btn:hover {
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.prev-btn { left: 15px; }
+.next-btn { right: 15px; }
+
+/* Pagination Indicator Dots */
+.dots-container {
+  position: absolute;
+  bottom: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.dot.active {
+  background-color: #fff;
+  transform: scale(1.2);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 600px) {
+  .slider-container {
+    width: 100%;
+    border-radius: 0; /* Full-width edge-to-edge look on mobile phones */
+    margin: 10px auto;
+  }
+  
+  /* Make buttons slightly smaller and transparent so they don't block content */
+  .nav-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+
+
+
+/*
+search-interface.css*/
+        /* ==========================================================================
+           IMAGE SEARCH ENGINE CRITICAL PRESENTATION & STRUCTURE 
+           ========================================================================== */
+
+        /* Search Nav wrapper holding the entry point trigger */
+        .search-nav {
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 30px;
+            position: relative;
+            z-index: 50;
+        }
+
+        /* Rounded entry launch toggle button styling */
+        .toggle-btn {
+            padding: 12px 28px;
+            font-family: sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            background-color: #f8f9fa;
+            color: #000000;
+            border: 4px solid #0dd9ec;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        .toggle-btn:hover {
+            background-color: #0dd9ec;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Full Screen Google-Style Cover Overlay Engine Panels */
+        .search-overlay-view {
+            display: none; /* Keeps search overlay interface inactive at start */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(10, 11, 13, 0.98); /* Deep overlay block color out page content */
+            z-index: 9999; /* Locks layout to the top layer above everything else */
+            overflow-y: auto;
+            padding: 40px 20px;
+            font-family: sans-serif;
+            perspective: 2000px; /* Provides 3D depth to elements inside the overlay view */
+        }
+
+        /* Overlay Active Activation Trigger Rules */
+        .search-overlay-view.is-active {
+            display: block;
+        }
+
+        /* Top Bar control structure within fullscreen view mode */
+        .overlay-header {
+            max-width: 1200px;
+            margin: 0 auto 60px auto;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        /* Interactive Close Action Button */
+        .close-search-btn {
+            background: none;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+            font-size: 14px;
+            font-weight: bold;
+            padding: 10px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .close-search-btn:hover {
+            background: #ffffff;
+            color: #000000;
+            border-color: #ffffff;
+        }
+
+        /* ==========================================================================
+           3D ROTATING SPIRAL SEARCH INPUT ENGINE LAYER
+           ========================================================================== */
+        .search-panel-center {
+            max-width: 650px;
+            margin: 0 auto 50px auto;
+            text-align: center;
+            opacity: 0;
+            transform: scale(0.3) rotate(-360deg) translateY(-100px);
+            transition: none; /* Default state when hidden */
+        }
+
+        /* Triggers hyper-dynamic entry rotation when search overlay becomes active */
+        .search-overlay-view.is-active .search-panel-center {
+            animation: spiralInEntry 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .search-panel-center h2 {
+            color: #ffffff;
+            font-size: 24px;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .search-box-wrapper {
+            display: flex;
+            gap: 12px;
+            background: #ffffff;
+            padding: 6px 12px;
+            border-radius: 100px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.24);
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Subtle glowing expansion on hover/focus */
+        .search-box-wrapper:focus-within {
+            transform: scale(1.02);
+            box-shadow: 0 15px 35px rgba(13, 217, 236, 0.3);
+        }
+
+        .search-box-wrapper input {
+            flex: 1;
+            padding: 12px 16px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+            background: transparent;
+            color: #202124;
+        }
+
+        .search-box-wrapper button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            background-color: #1a73e8;
+            color: #ffffff;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .search-box-wrapper button:hover {
+            background-color: #1557b0;
+        }
+
+        /* 3D Entry Keyframe Physics Sequence */
+        @keyframes spiralInEntry {
+            0% {
+                opacity: 0;
+                transform: scale(0.1) rotate(-540deg) translateY(-200px) rotateX(45deg);
+                filter: blur(8px);
+            }
+            70% {
+                opacity: 0.85;
+                transform: scale(1.05) rotate(20deg) translateY(10px) rotateX(0deg);
+                filter: blur(0px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg) translateY(0) rotateX(0deg);
+            }
+        }
+
+        /* Google-Style Orderly Output presentation Grid System */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 24px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Image Display Inventory Cards */
+        .search-item {
+            display: none; /* Stays hidden unless filtered by engine queries */
+            background-color: #1f2023;
+            border: 1px solid #2d2f34;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .search-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+        }
+
+        /* Forces matching item frames into geometric uniform square blocks */
+        .image-box {
+            width: 100%;
+            height: 260px;
+            overflow: hidden;
+            background-color: #2d2f34;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Description labels beneath output images */
+        .image-label {
+            padding: 14px;
+            font-size: 14px;
+            color: #e8eaed;
+            text-align: center;
+            font-weight: 500;
+            background: #1f2023;
+        }
+
+        /* ==========================================================================
+           ULTRA-FUTURISTIC QUANTUM TAILOR SEWING ENGINE ERROR INTERFACE 
+           ========================================================================== */
+        .search-error-fallback {
+            display: none;
+            text-align: center;
+            padding: 60px 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            perspective: 1200px;
+        }
+
+        /* Interactive Fabric Ring Structure */
+        .quantum-hoop {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 0 auto 40px;
+            border: 6px double #0dd9ec;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(13, 217, 236, 0.03) 0%, rgba(0, 0, 0, 0) 70%);
+            box-shadow: 0 0 30px rgba(13,217,236,0.2), inset 0 0 30px rgba(13,217,236,0.1);
+            animation: rotateHoop 25s linear infinite;
+        }
+
+        /* Glowing Tailoring Mesh grid cross intersections mapped internally */
+        .quantum-hoop::before {
+            content: '';
+            position: absolute;
+            top: 10%; left: 10%; right: 10%; bottom: 10%;
+            border: 2px dashed rgba(255,255,255,0.15);
+            border-radius: 50%;
+            animation: counterRotate 12s ease-in-out infinite;
+        }
+
+        /* Floating Neon Needle Vector */
+        .matrix-needle {
+            position: absolute;
+            top: 30px;
+            left: 105px;
+            width: 4px;
+            height: 110px;
+            background: linear-gradient(to bottom, #fff 0%, #ffdf00 50%, rgba(255,223,0,0) 100%);
+            box-shadow: 0 0 15px #ffdf00;
+            border-radius: 2px;
+            transform-origin: top center;
+            animation: weaveNeedle 3.5s infinite ease-in-out;
+            z-index: 5;
+        }
+
+        /* The Eye of the Needle Ring hole loop layout */
+        .matrix-needle::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: -3px;
+            width: 10px;
+            height: 18px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            background: #0a0b0d;
+        }
+
+        /* Neon Stitch Thread trace line paths traversing geometric coordinates */
+        .neon-stitch-line {
+            position: absolute;
+            width: 80px;
+            height: 2px;
+            background: repeating-linear-gradient(90deg, #0dd9ec, #0dd9ec 8px, transparent 8px, transparent 16px);
+            filter: drop-shadow(0 0 8px #0dd9ec);
+            opacity: 0.7;
+        }
+
+        .stitch-1 { top: 70px; left: 20px; transform: rotate(25deg); animation: floatStitch 4s ease-in-out infinite; }
+        .stitch-2 { bottom: 80px; right: 10px; transform: rotate(-35deg); animation: floatStitch 5s ease-in-out infinite reverse; }
+        .stitch-3 { bottom: 40px; left: 40px; transform: rotate(15deg); animation: floatStitch 6s ease-in-out infinite 1s; }
+
+        /* Floating Measuring Tape Scale indicators */
+        .tape-measure-stream {
+            position: absolute;
+            width: 100%;
+            height: 12px;
+            bottom: -10px;
+            left: 0;
+            background: repeating-linear-gradient(90deg, #ffdf00 0px, #ffdf00 2px, transparent 2px, transparent 12px);
+            opacity: 0.2;
+            animation: tapeSlide 8s linear infinite;
+        }
+
+        /* Text presentation adjustments */
+        .search-error-fallback h3 {
+            color: #ffffff;
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        .kinetic-text-engine {
+            color: #a0aec0;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            min-height: 22px;
+            font-family: monospace;
+        }
+
+        /* ==========================================================================
+           KEYFRAME ENGINES MAPPING COMPLETE GEOMETRIC SEWING ANIMATIONS
+           ========================================================================== */
+        @keyframes rotateHoop {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes counterRotate {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(-180deg) scale(1.08); border-color: rgba(13, 217, 236, 0.4); }
+        }
+
+        @keyframes weaveNeedle {
+            0%, 100% { transform: translateY(0) rotate(-8deg); }
+            33% { transform: translateY(35px) rotate(12deg) scaleY(0.95); }
+            66% { transform: translateY(-15px) rotate(-18deg) scaleY(1.05); }
+        }
+
+        @keyframes floatStitch {
+            0%, 100% { transform: translateY(0) rotate(20deg); opacity: 0.4; }
+            50% { transform: translateY(-15px) rotate(25deg); opacity: 0.9; filter: drop-shadow(0 0 12px #0dd9ec); }
+        }
+
+        @keyframes tapeSlide {
+            0% { background-position: 0 0; }
+            100% { background-position: 240px 0; }
+        }
+
+        /* Complete Automated Mobile Screen Responsive Viewport Configurations */
+        @media (max-width: 600px) {
+            .results-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                padding: 10px;
+            }
+            
+            .image-box {
+                height: 170px;
+            }
+
+            .search-panel-center h2 {
+                font-size: 18px;
+            }
+
+            .search-box-wrapper input {
+                padding: 8px 8px;
+                font-size: 14px;
+            }
+
+            .quantum-hoop {
+                width: 160px;
+                height: 160px;
+            }
+            .matrix-needle {
+                left: 78px;
+                height: 80px;
+            }
+        }
+/*search-interface.css is end*/
+
+/* Toggle Button to Show/Hide the Widget */
+        .feedback-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transition: transform 0.2s, background-color 0.2s;
+            z-index: 1000;
+        }
+
+        .feedback-toggle:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+
+        /* Main Feedback Widget Container (Hidden by default) */
+        .feedback-container {
+            position: fixed;
+            bottom: 80px;
+            left: 20px;
+            width: 320px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+            padding: 20px;
+            display: none; /* Keeps it hidden initially */
+            flex-direction: column;
+            gap: 15px;
+            z-index: 1000;
+            border: 1px solid #eaeaea;
+        }
+
+        /* Active class to show the widget */
+        .feedback-container.show {
+            display: flex;
+        }
+
+        .feedback-container h3 {
+            margin: 0 0 5px 0;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        /* Clean, Borderless-style Input Text Boxes */
+        .feedback-input {
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 0.9rem;
+            background-color: #fafafa;
+            transition: border-color 0.2s, background-color 0.2s;
+            outline: none;
+        }
+
+        .feedback-input:focus {
+            border-color: #007bff;
+            background-color: #fff;
+        }
+
+        textarea.feedback-input {
+            resize: none;
+            height: 100px;
+            font-family: inherit;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .submit-btn:hover {
+            background-color: #218838;
+        }
+
+        /* Status Messages */
+        .status-msg {
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* First, define the animation keyframes */
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Apply it to a specific Class */
+.blink-text {
+  animation: blinker 1.5s linear infinite;
+  color: rgb(0, 255, 225); /* Optional: Makes the text red */
+  font-weight: bold;
+}
+
+/* Or apply it to a specific ID */
+#warning-message {
+  animation: blinker 1m linear infinite;
+}
+
+
+#bg-music {
+    display: none;
+}
+
+
+
+
+ /* ==========================================================================
+           MODERN TWO-COLUMN MAP GRID LAYOUT
+           ========================================================================== */
+        .maps-grid-section {
+            width: 100%;
+            max-width: 1000px; /* Wider space for 2 columns side-by-side */
+            margin: 0 auto;
+            padding: 20px 5%;
+            display: grid;
+            grid-template-columns: 1fr 1fr; /* Equal columns layout */
+            gap: 25px;
+        }
+
+        .map-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            border: 3px solid rgb(195, 16, 16);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .map-card iframe {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        .map-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        /* Turns columns into rows automatically on mobile views */
+        @media (max-width: 768px) {
+            .maps-grid-section {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+#card{
+  width: 100%;
+  height: 400px;
+  background-color: cornsilk;
+  display: flex;
+ 
+  justify-content: center;
+  border: 3px solid rgb(195, 16, 16);
+}
+
+.link-li{
+  width: 200px;
+  height: 100px;
+  font-weight: 900;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top:800px;
+  background-color: rgb(58, 59, 158);
+  color: white;
+  font-width: 100px;
+  outline: dotted 5px rgb(181, 27, 205);
+}
+
+.blink-text-t {
+  animation: blinker 1.5s linear infinite;
+  color: rgb(255, 255, 255); /* Optional: Makes the text red */
+  font-weight: bold;
+}
+
+.blink-tet {
+  animation: blinker ar infinite;
+  color: rgb(0, 255, 149); /* Optional: Makes the text red */
+  font-weight: bold;
+}
+
+/*time table started*/
+  /* ==========================================================================
+           TIMING COMPONENT AREA (Sits perfectly down below the columns)
+           ========================================================================== */
+        .timing-section-wrapper {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding: 20px 5% 60px 5%;
+        }
+
+        .maps-timing-widget {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 350px;
+            overflow: hidden;
+            border: 1px solid #dadce0;
+        }
+
+        .hours-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            cursor: pointer;
+            user-select: none;
+            background-color: #ffffff;
+        }
+
+        .hours-header:hover { background-color: #f8f9fa; }
+        .header-left, .header-right { display: flex; align-items: center; gap: 6px; }
+        .clock-icon { font-size: 16px; }
+        .header-right { font-size: 13px; color: #70757a; font-weight: 500; }
+
+        .status-badge {
+            font-size: 13px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 4px;
+            animation: pulseBlinker 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseBlinker {
+            0% { opacity: 1; }
+            50% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .status-badge.open { color: #137333; background-color: #e6f4ea; }
+        .status-badge.closed { color: #c5221f; background-color: #fce8e6; }
+
+        .dropdown-arrow { fill: #70757a; transition: transform 0.3s ease; }
+        .dropdown-arrow.active { transform: rotate(180deg); }
+
+        .hours-table-panel {
+            max-height: 0;
+            overflow-y: auto;
+            transition: max-height 0.35s ease-in-out;
+            background-color: #ffffff;
+        }
+
+        /* Opens Top-To-Down cleanly */
+        .maps-timing-widget.active .hours-table-panel {
+            max-height: 500px;
+            border-top: 1px solid #dadce0;
+        }
+
+        .hours-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        .hours-table td { padding: 12px 16px; color: #3c4043; border-bottom: 1px solid #f1f3f4; text-align: left; }
+        .hours-table tr:last-child td { border-bottom: none; }
+        .hours-table td:last-child { text-align: right; color: #70757a; }
+        
+        .hours-table tr.today { font-weight: bold; background-color: #e8f0fe; }
+        .hours-table tr.today td { color: #1a73e8 !important; }
+
+
+        .about-us{
+            background-color: rgb(255, 255, 251);
+            border: 3px solid rgb(27, 170, 189);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 40px 5%;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        .color-txt-chng{
+            color: rgb(199, 188, 163);
+            font-weight: bold;
+           
+        }
+
+    
+        

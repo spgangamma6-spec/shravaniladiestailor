@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>shravani ladies tailor web</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          emailjs.init({
+            publicKey: "96LWqzj0CPNFO0Fkx", 
+          });
+       })();
+    </script>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+            <img src="slt.jpg" alt="logo" class="logo-img">
+            <span class="brand-name">SHRAVANI LADIES TAILOR</span>
+        </div>
+        <ul class="nav-links" id="navMenu">
+            <li><a href="home.html" onclick="activeLink(this)" style="color: rgb(225, 229, 233);">Home</a></li>
+            <li><a href="about.html" onclick="activeLink(this)" style="color: rgb(225, 229, 233);">About</a></li>
+            <li><a href="contact.html" onclick="activeLink(this)" style="color: rgb(225, 229, 233);">Contact</a></li>
+            <li><a href="index.html" class="login-btn"> Go back to welcome page</a></li>
+        </ul>
+    </header>
+
+    <main class="container">
+        <h1 style="color: white;">WELCOME TO SHRAVANI'S SERVICE PAGE</h1>
+        <img src="slt.jpg" alt="Shop Analysis Image" class="hero-img">
+    </main>
+
+    <nav class="search-nav">
+        <button class="toggle-btn" id="searchToggleBtn">🔍 Open Search</button>
+    </nav>
+
+    <div class="search-overlay-view" id="searchOverlay">
+        
+        <div class="overlay-header">
+            <button class="close-search-btn" id="closeSearchBtn">✕ Close Search</button>
+        </div>
+
+        <!-- Centered Layout Shell that executes the 3D spiral entrance spinning effect -->
+        <div class="search-panel-center">
+            <h2>Search Shravani Catalog Indices</h2>
+            <div class="search-box-wrapper">
+                <input type="text" id="searchInput" placeholder="Search blouse, top, lehengablouse, frock, gown...">
+                <button id="executeSearchBtn">
+                    <img src="magnifier.png" width="20" height="25" alt="Search">
+                </button>
+            </div>
+        </div>
+
+        <!-- Pattern Error Interface Block Container -->
+        <div class="search-error-fallback" id="searchErrorBlock">
+            <div class="quantum-hoop">
+                <div class="matrix-needle"></div>
+                <div class="neon-stitch-line stitch-1"></div>
+                <div class="neon-stitch-line stitch-2"></div>
+                <div class="neon-stitch-line stitch-3"></div>
+                <div class="tape-measure-stream"></div>
+            </div>
+            <h3>Pattern Cluster Not Found</h3>
+            <div class="kinetic-text-engine" id="kineticErrorText"></div>
+        </div>
+
+        <main class="results-grid" id="resultsGrid">
+            
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(1).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Blouse1</div>
+            </div>
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(2).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Blouse2</div>
+            </div>
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(3).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Blouse3</div>
+            </div>
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(4).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Blouse4</div>
+            </div>
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(5).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Blouse5</div>
+            </div>
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(6).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Blouse6</div>
+            </div>
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(7).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Blouse7</div>
+            </div>
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(8).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Blouse8</div>
+            </div>
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(9).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Blouse9</div>
+            </div>
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(10).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Blouse10</div>
+            </div>
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(11).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Embroidery front neck Blouse</div>
+            </div>
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(12).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Embroidery front neck Blouse</div>
+            </div> 
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(13).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Blouse 11</div>
+            </div> 
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(14).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Embroidery front neck Blouse</div>
+            </div> 
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(15).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Embroidery back neck Blouse</div>
+            </div> 
+            <div class="search-item blouse">
+                <div class="image-box"><img src="blouse(16).jpg" alt="Blouse Collection"></div>
+                <div class="image-label">Banarasi saree blouse Blouse</div>
+            </div> 
+
+            <div class="search-item top">
+                <div class="image-box"><img src="top(1).jpg" alt="Top Apparel"></div>
+                <div class="image-label">Top1</div>
+            </div>
+            <div class="search-item top">
+                <div class="image-box"><img src="top(2).jpg" alt="Top Apparel"></div>
+                <div class="image-label">Top2</div>
+            </div>
+            <div class="search-item top">
+                <div class="image-box"><img src="top(3).jpg" alt="Top Apparel"></div>
+                <div class="image-label">Top3</div>
+            </div>
+            <div class="search-item top">
+                <div class="image-box"><img src="top(4).jpg" alt="Top Apparel"></div>
+                <div class="image-label">Top4</div>
+            </div>
+            <div class="search-item top">
+                <div class="image-box"><img src="top(5).jpg" alt="Top Apparel"></div>
+                <div class="image-label">Top5</div>
+            </div>
+            <div class="search-item top">
+                <div class="image-box"><img src="top(6).jpg" alt="Top Apparel"></div>
+                <div class="image-label">Top6</div>
+            </div>
+            <div class="search-item top">
+                <div class="image-box"><img src="top(7).jpg" alt="Top Apparel"></div>
+                <div class="image-label">Top7</div>
+            </div>
+            <div class="search-item top">
+                <div class="image-box"><img src="top(8).jpg" alt="Top Apparel"></div>
+                <div class="image-label">Top8</div>
+            </div>
+
+            <div class="search-item lehengablouse">
+                <div class="image-box"><img src="lehenga-blouse(1).jpg" alt="Lehenga"></div>
+                <div class="image-label">LehengaBlouse1</div>
+            </div>
+            <div class="search-item lehengablouse">
+                <div class="image-box"><img src="lehenga-blouse(2).jpg" alt="Lehenga"></div>
+                <div class="image-label">LehengaBlouse2</div>
+            </div>
+            <div class="search-item lehengablouse">
+                <div class="image-box"><img src="lehenga-blouse(3).jpg" alt="Lehenga"></div>
+                <div class="image-label">LehengaBlouse3</div>
+            </div>
+            <div class="search-item lehengablouse">
+                <div class="image-box"><img src="lehenga-blouse(4).jpg" alt="Lehenga"></div>
+                <div class="image-label">LehengaBlouse4</div>
+            </div>
+            <div class="search-item lehengablouse">
+                <div class="image-box"><img src="lehenga-blouse(5).jpg" alt="Lehenga"></div>
+                <div class="image-label">LehengaBlouse5</div>
+            </div>
+            <div class="search-item lehengablouse">
+                <div class="image-box"><img src="lehenga-blouse(6).jpg" alt="Lehenga"></div>
+                <div class="image-label">LehengaBlouse6</div>
+            </div>
+            <div class="search-item lehengablouse">
+                <div class="image-box"><img src="lehenga-blouse(7).jpg" alt="Lehenga"></div>
+                <div class="image-label">LehengaBlouse7</div>
+            </div>
+            <div class="search-item lehengablouse">
+                <div class="image-box"><img src="lehenga-blouse(8).jpg" alt="Lehenga"></div>
+                <div class="image-label">LehengaBlouse8</div>
+            </div>
+
+            <div class="search-item frock">
+                <div class="image-box"><img src="frock(1).jpg" alt="Frock"></div>
+                <div class="image-label">Frock1</div>
+            </div>
+            <div class="search-item frock">
+                <div class="image-box"><img src="frock(2).jpg" alt="Frock"></div>
+                <div class="image-label">Frock2</div>
+            </div>
+            <div class="search-item frock">
+                <div class="image-box"><img src="frock(3).jpg" alt="Frock"></div>
+                <div class="image-label">Frock3</div>
+            </div>
+            <div class="search-item frock">
+                <div class="image-box"><img src="frock(4).jpg" alt="Frock"></div>
+                <div class="image-label">Frock4</div>
+            </div>
+            <div class="search-item frock">
+                <div class="image-box"><img src="frock(5).jpg" alt="Frock"></div>
+                <div class="image-label">Frock5</div>
+            </div>
+            <div class="search-item frock">
+                <div class="image-box"><img src="frock(6).jpg" alt="Frock"></div>
+                <div class="image-label">Frock6</div>
+            </div>
+            <div class="search-item frock">
+                <div class="image-box"><img src="frock(7).jpg" alt="Frock"></div>
+                <div class="image-label">Frock7</div>
+            </div>
+            <div class="search-item frock">
+                <div class="image-box"><img src="frock(8).jpg" alt="Frock"></div>
+                <div class="image-label">Frock8</div>
+            </div>
+
+            <div class="search-item gown">
+                <div class="image-box"><img src="gown(1).jpg" alt="Gown"></div>
+                <div class="image-label">Gown1</div>
+            </div>
+            <div class="search-item gown">
+                <div class="image-box"><img src="gown(2).jpg" alt="Gown"></div>
+                <div class="image-label">Gown2</div>
+            </div>
+            <div class="search-item gown">
+                <div class="image-box"><img src="gown(3).jpg" alt="Gown"></div>
+                <div class="image-label">Gown3</div>
+            </div>
+            <div class="search-item gown">
+                <div class="image-box"><img src="gown(4).jpg" alt="Gown"></div>
+                <div class="image-label">Gown4</div>
+            </div>
+            <div class="search-item gown">
+                <div class="image-box"><img src="gown(5).jpg" alt="Gown"></div>
+                <div class="image-label">Gown5</div>
+            </div>
+            <div class="search-item gown">
+                <div class="image-box"><img src="gown(6).jpg" alt="Gown"></div>
+                <div class="image-label">Gown6</div>
+            </div>
+            <div class="search-item gown">
+                <div class="image-box"><img src="gown(7).jpg" alt="Gown"></div>
+                <div class="image-label">Gown7</div>
+            </div>
+            <div class="search-item gown">
+                <div class="image-box"><img src="gown(8).jpg" alt="Gown"></div>
+                <div class="image-label">Gown8</div>
+            </div>
+
+        </main>
+    </div>
+
+    <audio id="bg-music" src="background-song.mp3" loop></audio>
+
+    <script>
+        // Background Music Automation Controller Logic
+        window.addEventListener('DOMContentLoaded', () => {
+            const audio = document.getElementById('bg-music');
+            if (audio) {
+                audio.volume = 0.4; 
+                const savedTime = localStorage.getItem('musicPlaybackTime');
+                if (savedTime) {
+                    audio.currentTime = parseFloat(savedTime);
+                }
+                audio.addEventListener('timeupdate', () => {
+                    localStorage.setItem('musicPlaybackTime', audio.currentTime);
+                });
+                const playAudio = () => {
+                    audio.play().catch(() => {
+                        document.addEventListener('click', () => {
+                            audio.play();
+                        }, { once: true });
+                    });
+                };
+                playAudio();
+            }
+        });
+
+        // Search Interface Display and Filter System Logic
+       
+    </script>                                                                                                                               
+    <script src="script.js"></script>
+</body>
+</html>

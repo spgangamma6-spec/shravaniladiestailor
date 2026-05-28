@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>shravani ladies tailor web</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+        <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          // Replace with your real EmailJS Public Key
+          emailjs.init({
+            publicKey: "96LWqzj0CPNFO0Fkx", 
+          });
+       })();
+    </script>
+    </head>
+    <body>
+        <header>
+            <div class="header-left">
+                <div class="menu-icon" onclick="toggleMenu()">&#9776</div>
+                <img src="slt.jpg" alt="logo" class="logo-img">
+                <span class="brand-name">SHRAVANI LADIES TAILOR</span>
+            </div>
+                <ul class="nav-links" id="navMenu">
+    <li><a href="home.html" onclick="activateLink(this)" style="color: rgb(225, 229, 233);">Home</a></li>
+    <li><a href="service.html" onclick="activateLink(this)" style="color: rgb(225, 229, 233);">Services</a></li>
+    <li><a href="contact.html" onclick="activateLink(this)" style="color: rgb(225, 229, 233);">Contact</a></li>
+    <li><a href="index.html" class="login-btn"> Go back to welcome page</a></li>
+</ul>
+
+        </header>
+         <main class="container">
+                 <h1 style="color: white;">WELCOM TO SHRAVANI'S ABOUT PAGE</h1>
+         <img src="slt.jpg" alt="Shop Analysis Image" class="hero-img">
+        
+</main>
+
+<div class="about-us">
+    <h2>About Us</h2>
+    <p><b>Miss. Gangamma is the founder of Shravani Ladies Tailor.</b><br><font size="10">H</font><b>i
+I am a skilled Ladies tailor with <BR>**20 years of experience in the tailoring field**.<br> During this period, I have worked in many reputed boutiques<br> and <br>gained special experience in different designs and modern fashion styles.<br>
+
+Later, I started my own tailoring shop and earned the trust of customers by providing <br> **perfect fitting and beautiful stitching** <br>according to each woman’s body measurements.<br> Giving importance to customers’ preferences, comfort, and design, <br>I carefully create every outfit with elegance and attractiveness.<br>
+
+The main specialties of my work:<br>
+
+<i class="color-txt-chng">* Perfect fitting according to measurements<br>
+* Neat and precise stitching<br>
+* Experience in modern fashion designs<br>
+* Customer-friendly service<br>
+* Discipline and trust in delivering orders on the promised time<br></i>
+
+With the belief that<br> **“Customer satisfaction is my success,”** <br>I provide my service with love, dedication, and responsibility. </b>
+</p>
+</div>
+
+ <section class="maps-grid-section">
+        <div class="map-card">
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.8556930500436!2d77.4823706!3d12.916995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae3f38c1329a27%3A0xf5949e06af105204!2sSHRAVANI%20LADIES%20TAILOR%20GANGAMMA%20PY!5e0!3m2!1sen!2sin!4v1779311560584!5m2!1sen!2sin" width="250" height="515" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" align="left"></iframe>
+            <div class="map-title">📍 Map Location of Our Shop</div>
+        </div>
+
+        <div class="map-card">
+ <iframe src="https://www.google.com/maps/embed?pb=!4v1779664579703!6m8!1m7!1sRhA2dlFgRxqnBnONrHa4HA!2m2!1d12.91695819877553!2d77.48242464998653!3f66.51099038763024!4f3.203274713670311!5f0.7820865974627469" width="250" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" align="left"></iframe>
+            <div class="map-title">🔄 360° Virtual Shop View</div>
+        </div>
+    </section>
+       
+
+ <section class="timing-section-wrapper">
+        <div class="maps-timing-widget" id="hoursWidget">
+            <div class="hours-header" id="hoursToggle">
+                <div class="header-left">
+                    <span class="clock-icon">🕒</span>
+                    <span id="currentStatus" class="status-badge">Checking...</span>
+                </div>
+                <div class="header-right">
+                    <span id="todaysHours">Loading hours...</span>
+                    <svg class="dropdown-arrow" id="dropdownArrow" viewBox="0 0 24 24" width="18" height="18">
+                        <path d="M7 10l5 5 5-5H7z"/>
+                    </svg>
+                </div>
+            </div>
+
+            <div class="hours-table-panel">
+                <table class="hours-table">
+                    <tr data-day="1"><td>Monday</td><td>10:00 AM - 9:00 PM</td></tr>
+                    <tr data-day="2"><td>Tuesday</td><td>10:00 AM - 9:00 PM</td></tr>
+                    <tr data-day="3"><td>Wednesday</td><td>10:00 AM - 9:00 PM</td></tr>
+                    <tr data-day="4"><td>Thursday</td><td>10:00 AM - 9:00 PM</td></tr>
+                    <tr data-day="5"><td>Friday</td><td>10:00 AM - 9:00 PM</td></tr>
+                    <tr data-day="6"><td>Saturday</td><td>10:00 AM - 9:00 PM</td></tr>
+                    <tr data-day="0"><td>Sunday</td><td>10:00 AM - 8:00 PM</td></tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+          <!--send feedback box-->
+        
+         <!-- Toggle Button -->
+    <button class="feedback-toggle" id="toggleBtn">Send Feedback</button>
+
+    <!-- Feedback Container -->
+    <div class="feedback-container" id="feedbackBox">
+        <h3>Share your thoughts</h3>
+        <form id="feedbackForm">
+            <!-- Email Field -->
+            <input 
+                type="email" 
+                id="userEmail" 
+                class="feedback-input" 
+                placeholder="Your Gmail / Email address" 
+                required 
+                style="margin-bottom: 10px;"
+            >
+            
+            <!-- Message Field -->
+            <textarea 
+                id="userMessage" 
+                class="feedback-input" 
+                placeholder="Type your feedback here..." 
+                required
+            ></textarea>
+            
+            <button type="submit" class="submit-btn" style="width: 100%; margin-top: 10px;">Send to Gmail</button>
+        </form>
+        <div class="status-msg" id="statusMessage"></div>
+    </div>
+
+    <audio id="bg-music" src="backgroung-music.mp3" loop></audio>
+        <script src="script.js"></script>
+    </body>
+
+</html>

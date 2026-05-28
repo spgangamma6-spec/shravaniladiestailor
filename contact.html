@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>shravani ladies tailor web</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+
+        <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          // Replace with your real EmailJS Public Key
+          emailjs.init({
+            publicKey: "96LWqzj0CPNFO0Fkx", 
+          });
+       })();
+    </script>
+    </head>
+    <body>
+        <header>
+            <div class="header-left">
+                <div class="menu-icon" onclick="toggleMenu()">&#9776</div>
+                <img src="slt.jpg" alt="logo" class="logo-img">
+                <span class="brand-name">SHRAVANI LADIES TAILOR</span>
+            </div>
+                <ul class="nav-links" id="navMenu">
+                    <li><a href="home.html" onclick="activeLink(this)" style="color:  rgb(225, 229, 233);">Home</a></li>
+                    <li><a href="about.html" onclick="activeLink(this)" style="color:  rgb(225, 229, 233);">About</a></li>
+                    <li><a href="service.html" onclick="activeLink(this)" style="color:  rgb(225, 229, 233);">Service</a></li>
+                       <li><a href="index.html" class="login-btn"> Go back to welcome page</a></li>
+                </ul>
+
+        </header>
+          <main class="container">
+             
+        <h1 style="color: white;">WELCOM TO SHRAVANI'S CONTACT PAGE</h1>
+        
+         <img src="slt.jpg" alt="Shop Analysis Image" class="hero-img">
+         </main>
+     <div id="card"> 
+         <h1 ><font size="5"> Contact to our shop for more information for call now, to click on below link </font></h1>
+               <a href="tel:9972487341" class="link-li"><div class="blink-text-t">click me</div></a>
+     </div>
+        <!--send feedback box-->
+        
+         <!-- Toggle Button -->
+    <button class="feedback-toggle" id="toggleBtn">Send Feedback</button>
+
+    <!-- Feedback Container -->
+    <div class="feedback-container" id="feedbackBox">
+        <h3>Share your thoughts</h3>
+        <form id="feedbackForm">
+            <!-- Email Field -->
+            <input 
+                type="email" 
+                id="userEmail" 
+                class="feedback-input" 
+                placeholder="Your Gmail / Email address" 
+                required 
+                style="margin-bottom: 10px;"
+            >
+            
+            <!-- Message Field -->
+            <textarea 
+                id="userMessage" 
+                class="feedback-input" 
+                placeholder="Type your feedback here..." 
+                required
+            ></textarea>
+            
+            <button type="submit" class="submit-btn" style="width: 100%; margin-top: 10px;">Send to Gmail</button>
+        </form>
+        <div class="status-msg" id="statusMessage"></div>
+    </div>
+    <audio id="bg-music" src="backgroung-music.mp3" loop></audio>
+         <script src="script.js"></script>
+    </body>
+
+</html>

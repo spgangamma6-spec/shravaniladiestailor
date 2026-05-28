@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en & kan">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shravani ladies tailor web</title>
+   <link rel="stylesheet" href="style.css">
+   <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          // Replace with your real EmailJS Public Key
+          emailjs.init({
+            publicKey: "96LWqzj0CPNFO0Fkx", 
+          });
+       })();
+    </script>
+    </head>
+</head>
+<body>
+
+    <header>
+        <div class="header-left">
+            <div class="menu-icon" onclick="toggleMenu()">☰</div>
+            <img src="slt.jpg" alt="Shop Logo" class="logo-img">
+            <span class="brand-name">SHRAVANI LADIES TAILORS</span>
+        </div>
+
+        <ul class="nav-links" id="navMenu">
+          
+            <li><a href="about.html" onclick="activateLink(this)" style="color:  rgb(225, 229, 233);">About</a></li>
+            <li><a href="service.html" onclick="activateLink(this)" style="color:  rgb(225, 229, 233);">Services</a></li>
+            <li><a href="contact.html" onclick="activateLink(this)" style="color:  rgb(225, 229, 233);">Contact</a></li>
+        
+            <li><a href="index.html" class="login-btn"> Go back to welcome page</a></li>
+        </ul>
+    </header>
+
+   <main class="container">
+        <h1 style="color: white;">WELCOM TO SHRAVANI'S HOME PAGE</h1>
+      
+        
+        <img src="slt.jpg" alt="Shop Analysis Image" class="hero-img">
+    </main>
+
+   <h1 align="center" style="font-size: 18px; color: #ffffff;"><font size="8">"Stop fitting into clothes—let your clothes finally fit you. Your vision, our precision, your confidence."</font></h1><br> <p><h3 style="font-size: 24px; color: #6fff00;" align="center"><div id="warning-message">At Shravani Ladies Tailor,<br> we believe tailoring is more than just a service; it is an art form.<br> We go beyond the limitations of 'standard' off-the-rack sizing to ensure a flawless,<br> custom fit that celebrates your unique silhouette.<br> When you wear an outfit tailored by us, you aren’t just wearing fabric—you are wearing confidence.<br> Whether it is an intricate party-wear ensemble<br> or<br> a perfectly stitched blouse, we bring your dream designs to life with unmatched attention to detail and expert craftsmanship..</h3></div></p>
+
+   <!--start the slider-->
+         <div class="slider-container">
+  <!-- The moving track holding all slides -->
+  <div class="slider-track">
+    <div class="slide">
+      <img src="blouse(1).jpg " alt="BLOUSE TYPE1" ">
+    </div>
+    <div class="slide">
+      <img src="blouse(13).jpg" alt="BLOUSE TYPE2">
+    </div>
+    <div class="slide">
+      <img src="frock(1).jpg" alt="FROCK TYPE1">
+    </div>
+     <div class="slide">
+      <img src="gown(2).jpg" alt="GOWN ">
+    </div> 
+    <div class="slide">
+      <img src="lehenga-blouse(1).jpg" alt="lehenga-blouse">
+    </div>
+     <div class="slide">
+      <img src="top(2).jpg" alt=TOP">
+    </div>
+  </div>
+
+
+  <!-- Navigation Buttons (Hidden/smaller on mobile if preferred) -->
+  <button class="nav-btn prev-btn" aria-label="Previous Slide">&#10094;</button>
+  <button class="nav-btn next-btn" aria-label="Next Slide">&#10095;</button>
+
+  <!-- Pagination Dots -->
+  <div class="dots-container"></div>
+</div>
+
+<!--ending the slider-->
+
+ <h1>  <p style="color: rgb(234, 231, 231);" align="center"> More design and more cloths in a different type like blouses,tops,frok,lehenga-blouse and gown</h1> <br><h2 align="center"><b>
+  <div class="blink-text">
+ You want to see it, Than go to service page and search your looking </div></b></h2></p><br><br><br><br>
+ 
+   
+<div id="warning-message">
+</div> </b></p>
+    
+
+
+
+ <!--send feedback box-->
+        
+         <!-- Toggle Button -->
+    <button class="feedback-toggle" id="toggleBtn">Send Feedback</button>
+
+    <!-- Feedback Container -->
+    <div class="feedback-container" id="feedbackBox">
+        <h3>Share your thoughts</h3>
+        <form id="feedbackForm">
+            <!-- Email Field -->
+            <input 
+                type="email" 
+                id="userEmail" 
+                class="feedback-input" 
+                placeholder="Your Gmail / Email address" 
+                required 
+                style="margin-bottom: 10px;"
+            >
+            
+            <!-- Message Field -->
+            <textarea 
+                id="userMessage" 
+                class="feedback-input" 
+                placeholder="Type your feedback here..." 
+                required
+            ></textarea>
+            
+            <button type="submit" class="submit-btn" style="width: 100%; margin-top: 10px;">Send to Gmail</button>
+        </form>
+        <div class="status-msg" id="statusMessage"></div>
+    </div>
+    <audio id="bg-music" src="backgroung-music.mp3" loop></audio>
+     <script src="script.js"></script>
+    </body>
+        
+</body>
+</html>
