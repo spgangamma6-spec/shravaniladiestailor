@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D High-Speed Train Model - Accurate Face</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        #canvas-container {
+            width: 100vw;
+            height: 100vh;
+            cursor: grab;
+        }
+        #canvas-container:active {
+            cursor: grabbing;
+        }
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #111;
+            font-size: 24px;
+            font-weight: bold;
+            pointer-events: none;
+            transition: opacity 0.5s;
+            background: rgba(255,255,255,0.7);
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .instructions {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            pointer-events: none;
+            letter-spacing: 0.5px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+
+    <div id="loading">Generating 3D Train Model...</div>
+    <div class="instructions">Left Click + Drag to Rotate | Scroll to Zoom</div>
+    <div id="canvas-container"></div>
+
+    <script>
+        // --- 1. SET UP SCENE, CAMERA, & RENDERER ---
+        const container = document.getElementById('canvas-container');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xe5e5e5);
+        scene.fog = new THREE.FogExp2(0xe5e5e5, 0.015);
+
+        // Position camera to highlight the new nose shape
+        const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(18, 8, 22);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        container.appendChild(renderer.domElement);
+
+        // --- 2. ORBIT CONTROLS ---
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.maxPolarAngle = Math.PI / 2 - 0.05; // Don't go under floor
+        controls.minDistance = 10;
+        controls.maxDistance = 100;
+        controls.target.set(0, 2, 5); // Look slightly towards the front
+
+        // --- 3. LIGHTING SYSTEM ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.7);
+        dirLight.position.set(30, 40, 20);
+        dirLight.castShadow = true;
+        dirLight.shadow.mapSize.width = 2048;
+        dirLight.shadow.mapSize.height = 2048;
+        dirLight.shadow.camera.near = 0.5;
+        dirLight.shadow.camera.far = 150;
+        const d = 25;
+        dirLight.shadow.camera.left = -d;
+        dirLight.shadow.camera.right = d;
+        dirLight.shadow.camera.top = d;
+        dirLight.shadow.camera.bottom = -d;
+        dirLight.shadow.bias = -0.0005;
+        scene.add(dirLight);
+
+        const fillLight = new THREE.DirectionalLight(0xaaccff, 0.3);
+        fillLight.position.set(-30, 20, -20);
+        scene.add(fillLight);
+
+        // --- 4. ENVIRONMENT (STUDIO FLOOR) ---
+        const floorGeo = new THREE.PlaneGeometry(1000, 1000);
+        const floorMat = new THREE.MeshStandardMaterial({ 
+            color: 0xcccccc, 
+            roughness: 0.8, 
+            metalness: 0.1 
+        });
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.rotation.x = -Math.PI / 2;
+        floor.position.y = -1.15; 
+        floor.receiveShadow = true;
+        scene.add(floor);
+
+        // --- 5. MATERIALS DEFINITION ---
+        const matWhite = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.2, metalness: 0.1 });
+        const matDarkGrey = new THREE.MeshStandardMaterial({ color: 0x1a1a1a, roughness: 0.7, metalness: 0.2 });
+        const matBlue = new THREE.MeshStandardMaterial({ color: 0x001c71, roughness: 0.3, metalness: 0.2 });
+        const matGlass = new THREE.MeshStandardMaterial({ color: 0x050a05, roughness: 0.1, metalness: 0.9 });
+        const matWheel = new THREE.MeshStandardMaterial({ color: 0x444444, roughness: 0.5, metalness: 0.8 });
+        const matMetal = new THREE.MeshStandardMaterial({ color: 0xaaaaaa, roughness: 0.3, metalness: 0.9 });
+
+        // --- 6. MODEL GENERATION ---
+        const trainGroup = new THREE.Group();
+
+        const bodyLength = 26;
+        const bodyWidth = 3.2;
+        const bodyHeight = 3.5;
+
+        // 6a. Main Locomotive Body Extrusion
+        const bodyShape = new THREE.Shape();
+        bodyShape.moveTo(-bodyWidth/2, 0);
+        bodyShape.lineTo(-bodyWidth/2, bodyHeight * 0.65);
+        bodyShape.quadraticCurveTo(-bodyWidth/2, bodyHeight, -bodyWidth/4, bodyHeight);
+        bodyShape.lineTo(bodyWidth/4, bodyHeight);
+        bodyShape.quadraticCurveTo(bodyWidth/2, bodyHeight, bodyWidth/2, bodyHeight * 0.65);
+        bodyShape.lineTo(bodyWidth/2, 0);
+        bodyShape.lineTo(-bodyWidth/2, 0);
+
+        const extrudeSettings = { depth: bodyLength, bevelEnabled: false };
+        const mainBodyGeo = new THREE.ExtrudeGeometry(bodyShape, extrudeSettings);
+        mainBodyGeo.translate(0, 0, -bodyLength/2); // Center on Z axis
+        const mainBodyMesh = new THREE.Mesh(mainBodyGeo, matWhite);
+        mainBodyMesh.castShadow = true;
+        mainBodyMesh.receiveShadow = true;
+        trainGroup.add(mainBodyMesh);
+
+        // Dark Roof Segment
+        const roofGeo = new THREE.BoxGeometry(bodyWidth * 0.9, 0.4, bodyLength);
+        const roofMesh = new THREE.Mesh(roofGeo, matDarkGrey);
+        roofMesh.position.set(0, bodyHeight - 0.1, 0);
+        roofMesh.castShadow = true;
+        trainGroup.add(roofMesh);
+
+        // 6b. DEFORMED "DUCKBILL" NOSE (Perfectly matches AVE S-102 Face)
+        const noseGroup = new THREE.Group();
+        const noseLength = 8.5;
+
+        // Create a high-resolution box to deform
+        const noseGeo = new THREE.BoxGeometry(bodyWidth, bodyHeight, noseLength, 32, 32, 32);
+        noseGeo.translate(0, bodyHeight/2, noseLength/2); // Origin at connection point
+
+        const pos = noseGeo.attributes.position;
+        for (let i = 0; i < pos.count; i++) {
+            let x = pos.getX(i);
+            let y = pos.getY(i);
+            let z = pos.getZ(i);
+            
+            let t = z / noseLength; // 0 = connects to body, 1 = tip of nose
+            
+            // 1. Pinch the width as it gets closer to the tip
+            let widthScale = 1 - 0.45 * Math.pow(t, 2); 
+            x *= widthScale;
+
+            // 2. The Duckbill Sweep (Side Profile)
+            let ny = y / bodyHeight; // 0 to 1
+
+            // Top edge swoops down dramatically
+            let topCurve = bodyHeight - (Math.pow(t, 0.65) * (bodyHeight - 0.4));
+            // Bottom edge curves up very slightly
+            let bottomCurve = Math.pow(t, 1.5) * 0.3;
+            
+            y = bottomCurve + ny * (topCurve - bottomCurve);
+
+            // 3. Match the rounded top corners of the main body
+            if (ny > 0.6) {
+                let cornerFactor = Math.pow(Math.abs(x) / (bodyWidth/2 * widthScale), 3);
+                y -= cornerFactor * 0.35 * (1 - t * 0.7); 
+            }
+
+            pos.setXYZ(i, x, y, z);
+        }
+        noseGeo.computeVertexNormals();
+        const noseMesh = new THREE.Mesh(noseGeo, matWhite);
+        noseMesh.position.set(0, 0, bodyLength/2);
+        noseMesh.castShadow = true;
+        noseGroup.add(noseMesh);
+
+        // 6c. Elevated Cockpit Glass
+        const cockpitGeo = new THREE.BoxGeometry(bodyWidth * 0.75, 0.8, 2.5, 16, 16, 16);
+        cockpitGeo.translate(0, 0.4, 0);
+        const cPos = cockpitGeo.attributes.position;
+        for(let i=0; i<cPos.count; i++) {
+            let cx = cPos.getX(i);
+            let cy = cPos.getY(i);
+            let cz = cPos.getZ(i);
+            // Slant front down
+            if (cz > 0) cy -= cz * 0.5;
+            // Taper sides
+            cx *= 1 - (cy/0.8) * 0.15;
+            cPos.setXYZ(i, cx, cy, cz);
+        }
+        cockpitGeo.computeVertexNormals();
+        const cockpit = new THREE.Mesh(cockpitGeo, matGlass);
+        cockpit.position.set(0, bodyHeight * 0.68, bodyLength/2 + 1.2);
+        cockpit.rotation.x = -0.08; // Tilt forward slightly
+        noseGroup.add(cockpit);
+
+        // 6d. DEFORMED NOSE STRIPES (Flowing Livery)
+        // Blue Stripe down the nose
+        const nStripeGeo = new THREE.BoxGeometry(bodyWidth + 0.05, 0.15, noseLength, 16, 1, 16);
+        nStripeGeo.translate(0, 0, noseLength/2);
+        const nspos = nStripeGeo.attributes.position;
+        for(let i=0; i<nspos.count; i++) {
+            let x = nspos.getX(i);
+            let z = nspos.getZ(i);
+            let t = z / noseLength;
+            x *= 1 - 0.45 * Math.pow(t, 2); // Match width taper
+            let y = Math.pow(t, 1.5) * 0.3 + 0.3; // Match bottom curve + height offset
+            nspos.setXYZ(i, x, y, z);
+        }
+        nStripeGeo.computeVertexNormals();
+        const noseStripe = new THREE.Mesh(nStripeGeo, matBlue);
+        noseStripe.position.set(0, 0, bodyLength/2);
+        noseGroup.add(noseStripe);
+
+        // Dark Skirt down the nose
+        const nSkirtGeo = new THREE.BoxGeometry(bodyWidth + 0.04, 0.6, noseLength, 16, 1, 16);
+        nSkirtGeo.translate(0, 0, noseLength/2);
+        const nskpos = nSkirtGeo.attributes.position;
+        for(let i=0; i<nskpos.count; i++) {
+            let x = nskpos.getX(i);
+            let z = nskpos.getZ(i);
+            let t = z / noseLength;
+            x *= 1 - 0.45 * Math.pow(t, 2);
+            let y = Math.pow(t, 1.5) * 0.3 - 0.05; 
+            nskpos.setXYZ(i, x, y, z);
+        }
+        nSkirtGeo.computeVertexNormals();
+        const noseSkirt = new THREE.Mesh(nSkirtGeo, matDarkGrey);
+        noseSkirt.position.set(0, 0, bodyLength/2);
+        noseGroup.add(noseSkirt);
+
+        trainGroup.add(noseGroup);
+
+        // 6e. Main Body Paint Stripes
+        const blueStripe = new THREE.Mesh(new THREE.BoxGeometry(bodyWidth + 0.04, 0.15, bodyLength), matBlue);
+        blueStripe.position.set(0, 0.3, 0);
+        trainGroup.add(blueStripe);
+
+        const darkBottom = new THREE.Mesh(new THREE.BoxGeometry(bodyWidth + 0.03, 0.6, bodyLength), matDarkGrey);
+        darkBottom.position.set(0, -0.05, 0);
+        trainGroup.add(darkBottom);
+
+        // Flat Back End
+        const backEnd = new THREE.Mesh(new THREE.BoxGeometry(bodyWidth, bodyHeight, 0.1), matDarkGrey);
+        backEnd.position.set(0, bodyHeight/2, -bodyLength/2 + 0.05);
+        trainGroup.add(backEnd);
+
+        // 6f. Pantograph (Roof Power Arm)
+        const pantoGroup = new THREE.Group();
+        pantoGroup.position.set(0, bodyHeight + 0.1, -bodyLength/3);
+        
+        const baseFrame = new THREE.Mesh(new THREE.BoxGeometry(1.5, 0.05, 1.5), matDarkGrey);
+        pantoGroup.add(baseFrame);
+
+        const armGeo = new THREE.CylinderGeometry(0.04, 0.04, 1.5);
+        const lowerArm = new THREE.Mesh(armGeo, matMetal);
+        lowerArm.position.set(0, 0.6, 0.4);
+        lowerArm.rotation.x = Math.PI / 4;
+        pantoGroup.add(lowerArm);
+
+        const upperArm = new THREE.Mesh(armGeo, matMetal);
+        upperArm.position.set(0, 1.4, 0);
+        upperArm.rotation.x = -Math.PI / 4;
+        pantoGroup.add(upperArm);
+
+        const contactBar = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.05, 0.3), matDarkGrey);
+        contactBar.position.set(0, 1.9, -0.5);
+        pantoGroup.add(contactBar);
+
+        trainGroup.add(pantoGroup);
+
+        // 6g. Bogies & Wheels
+        function createBogie() {
+            const bogie = new THREE.Group();
+            
+            const frame = new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.4, 4), matDarkGrey);
+            frame.castShadow = true;
+            bogie.add(frame);
+
+            const wheelGeo = new THREE.CylinderGeometry(0.55, 0.55, 0.25, 24);
+            const axleGeo = new THREE.CylinderGeometry(0.08, 0.08, 2.4);
+
+            const wheelPositions = [
+                {x: 1.1, z: 1.2}, {x: -1.1, z: 1.2},
+                {x: 1.1, z: -1.2}, {x: -1.1, z: -1.2}
+            ];
+
+            const axle1 = new THREE.Mesh(axleGeo, matMetal);
+            axle1.rotation.z = Math.PI / 2; axle1.position.z = 1.2; bogie.add(axle1);
+
+            const axle2 = new THREE.Mesh(axleGeo, matMetal);
+            axle2.rotation.z = Math.PI / 2; axle2.position.z = -1.2; bogie.add(axle2);
+
+            wheelPositions.forEach(pos => {
+                const wheel = new THREE.Mesh(wheelGeo, matWheel);
+                wheel.rotation.z = Math.PI / 2;
+                wheel.position.set(pos.x, -0.1, pos.z);
+                wheel.castShadow = true;
+                bogie.add(wheel);
+            });
+            return bogie;
+        }
+
+        const frontBogie = createBogie();
+        frontBogie.position.set(0, -0.5, bodyLength/3);
+        trainGroup.add(frontBogie);
+
+        const rearBogie = createBogie();
+        rearBogie.position.set(0, -0.5, -bodyLength/3);
+        trainGroup.add(rearBogie);
+
+        trainGroup.position.y = 0.5; 
+        scene.add(trainGroup);
+
+        // --- 7. ACCURATE AVE LOGO GEN ---
+        function applyLogos() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512; canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = "#ffffff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw Accurate 'V' Wing element
+            ctx.strokeStyle = "#001c71";
+            ctx.lineWidth = 14;
+            ctx.lineJoin = "round";
+            ctx.beginPath();
+            ctx.moveTo(215, 90);
+            ctx.lineTo(245, 140);
+            ctx.lineTo(280, 80);
+            ctx.stroke();
+
+            // Draw AVE Text
+            ctx.fillStyle = "#555555";
+            ctx.font = "italic bold 85px 'Segoe UI', Arial, sans-serif";
+            ctx.fillText("A", 155, 150);
+            ctx.fillText("E", 285, 150);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            const logoMaterial = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.3 });
+            const logoPlateGeo = new THREE.PlaneGeometry(3.5, 1.75);
+            
+            const leftLogo = new THREE.Mesh(logoPlateGeo, logoMaterial);
+            leftLogo.position.set(bodyWidth/2 + 0.01, bodyHeight/2, bodyLength/4);
+            leftLogo.rotation.y = Math.PI / 2;
+            trainGroup.add(leftLogo);
+
+            const rightLogo = new THREE.Mesh(logoPlateGeo, logoMaterial);
+            rightLogo.position.set(-bodyWidth/2 - 0.01, bodyHeight/2, bodyLength/4);
+            rightLogo.rotation.y = -Math.PI / 2;
+            rightLogo.scale.x = -1; // mirror texture
+            trainGroup.add(rightLogo);
+        }
+        applyLogos();
+
+        document.getElementById('loading').style.opacity = '0';
+        setTimeout(() => document.getElementById('loading').remove(), 500);
+
+        // --- 8. ANIMATION LOOP ---
+        const clock = new THREE.Clock();
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const elapsedTime = clock.getElapsedTime();
+            
+            // Subtle suspension bobbing
+            trainGroup.position.y = 0.5 + Math.sin(elapsedTime * 2.0) * 0.01;
+            
+            // Spin wheels
+            const wheelSpeed = 0.03;
+            [frontBogie, rearBogie].forEach(bogie => {
+                bogie.children.forEach(child => {
+                    if(child.geometry.type === "CylinderGeometry" && child.position.x !== 0) {
+                        child.rotation.x += wheelSpeed;
+                    }
+                });
+            });
+
+            controls.update();
+            renderer.render(scene, camera);
+        }
+
+        // --- 9. RESPONSIVE RESIZE ---
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>
