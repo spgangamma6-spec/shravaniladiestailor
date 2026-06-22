@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharvani's Login</title>
+    <title>SLT - Tailor Shop Login</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -59,6 +59,7 @@
             to { transform: translateY(0); opacity: 1; }
         }
 
+        /* Tailor Stitch Line Animation */
         .stitch-line {
             height: 4px;
             background: repeating-linear-gradient(90deg, #ff4081, #ff4081 10px, transparent 10px, transparent 20px);
@@ -166,53 +167,6 @@
         .btn-submit:hover { background: #e91e63; }
         .btn-submit:active { transform: scale(0.98); }
 
-        .or-separator {
-            text-align: center;
-            margin: 18px 0;
-            position: relative;
-        }
-        .or-separator::before {
-            content: '';
-            position: absolute;
-            top: 50%; left: 0; right: 0;
-            height: 1px; background: #ddd;
-            z-index: 1;
-        }
-        .or-separator span {
-            background: #fff;
-            padding: 0 10px;
-            color: #757575;
-            font-size: 0.85rem;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .btn-google {
-            width: 100%;
-            padding: 12px;
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            color: #334155;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .btn-google:hover {
-            background: #f8fafc;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-        }
-        .btn-google i {
-            color: #4285F4;
-            font-size: 1.2rem;
-        }
-
         .forgot-link {
             display: block;
             text-align: center;
@@ -223,9 +177,9 @@
         }
         .forgot-link:hover { color: #ff4081; text-decoration: underline; }
 
-        /* --- MECHANICAL 4-WHEELS LOADER SCREEN --- */
+        /* --- INTERACTIVE 4-WHEEL LOADER SCREEN --- */
         .loading-screen {
-            display: none;
+            display: none; /* ಆರಂಭದಲ್ಲಿ ಹೈಡ್ ಆಗಿರುತ್ತದೆ */
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: #f0ebe1;
@@ -250,22 +204,31 @@
         }
 
         .wheels-system {
-            position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            pointer-events: none;
         }
 
         .wheel {
             position: absolute;
-            border: 4px dashed #4a4a4a; border-top-color: #111; border-bottom-color: #111; border-radius: 50%;
+            border: 4px dashed #4a4a4a;
+            border-top-color: #111;
+            border-bottom-color: #111;
+            border-radius: 50%;
             background: radial-gradient(circle, #cbd5e1 20%, #94a3b8 60%, #64748b 100%);
             box-shadow: inset 0 0 8px rgba(0,0,0,0.3), 0 4px 6px rgba(0,0,0,0.1);
             animation: spin 1.5s linear infinite;
         }
 
         .wheel::before {
-            content: ''; position: absolute; top: 50%; left: 50%; width: 85%; height: 2px; background: #4a4a4a; transform: translate(-50%, -50%);
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 85%; height: 2px; background: #4a4a4a; transform: translate(-50%, -50%);
         }
         .wheel::after {
-            content: ''; position: absolute; top: 50%; left: 50%; width: 2px; height: 85%; background: #4a4a4a; transform: translate(-50%, -50%);
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 2px; height: 85%; background: #4a4a4a; transform: translate(-50%, -50%);
         }
 
         .wheel-1 { width: 70px; height: 70px; top: 40px; right: 50px; animation-duration: 1.2s; }
@@ -288,7 +251,8 @@
         }
 
         .needle::after {
-            content: ''; position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); width: 1.5px; height: 6px; background-color: #1e293b; border-radius: 50%;
+            content: ''; position: absolute; bottom: 6px; left: 50%;
+            transform: translateX(-50%); width: 1.5px; height: 6px; background-color: #1e293b; border-radius: 50%;
         }
 
         .dynamic-thread {
@@ -309,23 +273,43 @@
         .stitch-svg-layer { position: absolute; bottom: 83px; left: 10%; width: 80%; height: 16px; z-index: 5; pointer-events: none; }
         .stitch-path { stroke: #ef4444; stroke-width: 2.5; stroke-linecap: round; stroke-dasharray: 8, 8; animation: move-stitches 4s linear infinite; }
 
+        /* ನಿಮ್ಮ ಲಾಗಿನ್ ಸ್ಟೇಟಸ್ ಮೆಸೇಜ್ ಶೈಲಿ */
         .status-text {
-            position: absolute; bottom: 25px; font-size: 14px; font-weight: 700; color: #e91e63; text-align: center; line-height: 1.5; padding: 0 15px;
+            position: absolute;
+            bottom: 25px;
+            font-size: 14px;
+            font-weight: 700;
+            color: #e91e63;
+            text-align: center;
+            line-height: 1.5;
+            padding: 0 15px;
         }
 
-        /* Animations Keyframes */
+        /* --- KEYFRAME ANIMATIONS --- */
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         @keyframes reciprocate { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(42px); } }
         @keyframes thread-stretch { 0%, 100% { height: 85px; transform: rotate(0deg); } 50% { height: 126px; transform: rotate(-3deg); } }
         @keyframes feed-fabric { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         @keyframes move-stitches { 0% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -360; } }
 
-        /* Modal */
+        /* Forgot Password Modal */
         .modal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 10; justify-content: center; align-items: center; padding: 20px;
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 10;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
         }
         .modal-content {
-            background: white; padding: 25px; border-radius: 12px; width: 100%; max-width: 360px; position: relative;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 360px;
+            position: relative;
         }
         .close-btn { position: absolute; right: 15px; top: 10px; font-size: 1.5rem; cursor: pointer; }
 
@@ -364,15 +348,15 @@
 
             <div class="workbed"></div>
 
-            <div class="status-text" id="statusMessage">Connecting to Server...</div>
+            <div class="status-text" id="statusMessage">Verifying Tailored Metrics...</div>
         </div>
     </div>
 
     <div class="login-container" id="loginWrapper">
         <div class="stitch-line"></div>
         <div class="form-header">
-            <img src="slt.jpg" alt="Sharvani's Logo" class="logo-img" onerror="this.style.display='none';">
-            <h2>Sharvani's Login</h2>
+            <img src="slt.jpg" alt="SLT Logo" class="logo-img" onerror="this.style.display='none';">
+            <h2>SLT Tailor Shop</h2>
         </div>
 
         <form id="loginForm">
@@ -401,12 +385,6 @@
             </div>
 
             <button type="submit" class="btn-submit">Submit & Login</button>
-
-            <div class="or-separator"><span>OR</span></div>
-            <button type="button" class="btn-google" id="googleLoginBtn">
-                <i class="fa-brands fa-google"></i> Sign in with Google
-            </button>
-
             <a href="#" class="forgot-link" id="openForgotModal">Forgot Password?</a>
         </form>
     </div>
@@ -432,16 +410,12 @@
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getDatabase, ref, child, get, set, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-        import { getAuth, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+        import { getDatabase, ref, child, get, set, update } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js";
 
-        // ಸುಧಾರಿತ ಅತ್ಯಂತ ನಿಖರವಾದ ಕನೆಕ್ಷನ್ ಕಾನ್ಫಿಗರೇಶನ್
         const firebaseConfig = {
             apiKey: "AIzaSyDlUWMxE24zT0jIJidlIqReR9eJEUnoCqY",
             authDomain: "shravaniladiestailor-41471.firebaseapp.com",
-            // ಏಷ್ಯಾ ರೀಜನ್ ಕನೆಕ್ಟಿವಿಟಿ ಫಿಕ್ಸ್ ಮಾಡಲು databaseURL ಆಡ್ ಮಾಡಲಾಗಿದೆ
-            databaseURL: "https://shravaniladiestailor-41471-default-rtdb.asia-south1.firebasedatabase.app",
             projectId: "shravaniladiestailor-41471",
             storageBucket: "shravaniladiestailor-41471.firebasestorage.app",
             messagingSenderId: "835359767338",
@@ -451,17 +425,15 @@
 
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
-        const auth = getAuth(app);
-        const googleProvider = new GoogleAuthProvider();
 
-        // UI Element References
+        // UI References
         const loaderScreen = document.getElementById('loaderScreen');
         const statusMessage = document.getElementById('statusMessage');
         const modal = document.getElementById('forgotModal');
         const needleBar = document.querySelector('.needle-bar');
         const thread = document.getElementById('thread');
 
-        // Dynamic Micro-timing adjustments for smooth stitching 
+        // Micro-timing mechanical adjustments for needle resistance
         if (needleBar && thread) {
             needleBar.addEventListener('animationiteration', () => {
                 const randomVariance = (Math.random() * 0.15 + 0.55).toFixed(2);
@@ -470,11 +442,11 @@
             });
         }
 
-        // Modal triggers
+        // Forgot Modal Toggle
         document.getElementById('openForgotModal').addEventListener('click', (e) => { e.preventDefault(); modal.style.display = 'flex'; });
         document.getElementById('closeForgotModal').addEventListener('click', () => { modal.style.display = 'none'; });
 
-        // --- MANUAL SUBMIT PROCESS ---
+        // --- HANDLE SUBMIT (AUTOMATIC SAVE & STITCH REDIRECT) ---
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -483,92 +455,57 @@
             const emailVal = document.getElementById('email').value.trim();
             const passVal = document.getElementById('password').value;
 
+            // 1. ಹೊಲಿಗೆ ಯಂತ್ರದ ಲೋಡಿಂಗ್ ಸ್ಕ್ರೀನ್ ಓಪನ್ ಮಾಡುವುದು
             loaderScreen.style.display = 'flex';
-            statusMessage.innerHTML = "Connecting and verifying tailored metrics...";
+            statusMessage.innerHTML = "Verifying with SLT Server...";
 
             const dbRef = ref(db);
             
             get(child(dbRef, `users/${userVal}`)).then((snapshot) => {
                 if (snapshot.exists()) {
                     const userData = snapshot.val();
+                    
                     if (userData.password === passVal) {
+                        // ಯೂಸರ್ ಇದ್ದರೆ ಯಶಸ್ವಿ ಲಾಗಿನ್ ಸಂದೇಶ
                         statusMessage.innerHTML = "Login is successful!<br>But don't forget login information.";
-                        setTimeout(() => { window.location.href = "home.html"; }, 3500);
+                        
+                        // 3.5 ಸೆಕೆಂಡ್ ಮೆಷಿನ್ ರನ್ ಆದ ನಂತರ ಆಟೋಮ್ಯಾಟಿಕ್ ಆಗಿ ಹೋಮ್ ಪೇಜ್‌ಗೆ ಹೋಗುತ್ತದೆ
+                        setTimeout(() => {
+                            window.location.href = "home.html";
+                        }, 3500);
+
                     } else {
                         loaderScreen.style.display = 'none';
                         alert("Login Rejected: Incorrect password!");
                     }
                 } else {
-                    // ಆಟೋಮ್ಯಾಟಿಕ್ ಆಗಿ ಹೊಸ ಪ್ರೊಫೈಲ್ ಡೇಟಾಬೇಸ್‌ಗೆ ಸೇವ್ ಆಗುತ್ತದೆ
+                    // ಹೊಸ ಯೂಸರ್ ಆಗಿದ್ದರೆ ಡೇಟಾಬೇಸ್‌ನಲ್ಲಿ ಆಟೋಮ್ಯಾಟಿಕ್ ಆಗಿ ಸೇವ್ ಮಾಡುತ್ತದೆ
                     set(ref(db, 'users/' + userVal), {
                         username: userVal,
                         phone: phoneVal,
                         email: emailVal,
                         password: passVal
                     }).then(() => {
-                        statusMessage.innerHTML = "Profile Saved Automatically!<br>Please remember your login details.";
-                        setTimeout(() => { window.location.href = "home.html"; }, 3500);
+                        statusMessage.innerHTML = "Profile Saved Successfully!<br>Please remember your login details.";
+                        
+                        setTimeout(() => {
+                            window.location.href = "home.html";
+                        }, 3500);
                     }).catch((err) => {
                         loaderScreen.style.display = 'none';
-                        alert("Database Write Error: " + err.message);
+                        alert("Error saving data: " + err.message);
                     });
                 }
             }).catch((error) => {
                 loaderScreen.style.display = 'none';
-                alert("Connection Error: " + error.message);
+                alert("Database Error: " + error.message);
             });
-        });
-
-        // --- GOOGLE SIGN IN PROCESS ---
-        document.getElementById('googleLoginBtn').addEventListener('click', () => {
-            loaderScreen.style.display = 'flex';
-            statusMessage.innerHTML = "Opening Secure Google Authentication Window...";
-
-            signInWithPopup(auth, googleProvider)
-                .then((result) => {
-                    statusMessage.innerHTML = "Syncing Google credentials with shravani' Database...";
-                    const user = result.user;
-                    
-                    const rawName = user.displayName || user.email.split('@')[0];
-                    const userVal = rawName.trim().replace(/\s+/g, '_').toLowerCase();
-                    
-                    const dbRef = ref(db);
-                    
-                    get(child(dbRef, `users/${userVal}`)).then((snapshot) => {
-                        if (snapshot.exists()) {
-                            statusMessage.innerHTML = `Login is successful!<br>Welcome back, ${user.displayName}!`;
-                            setTimeout(() => { window.location.href = "home.html"; }, 3500);
-                        } else {
-                            // ಗೂಗಲ್ ಡೇಟಾವನ್ನು ಆಟೋಮ್ಯಾಟಿಕ್ ಆಗಿ ಸೇವ್ ಮಾಡುತ್ತದೆ
-                            set(ref(db, 'users/' + userVal), {
-                                username: userVal,
-                                phone: user.phoneNumber || "Google Verified Account",
-                                email: user.email,
-                                password: "Google_Authenticated"
-                            }).then(() => {
-                                statusMessage.innerHTML = `Login is successful!<br>Welcome to Shravani Ladies Tailor Website, ${user.displayName}!`;
-                                setTimeout(() => { window.location.href = "home.html"; }, 3500);
-                            }).catch((err) => {
-                                loaderScreen.style.display = 'none';
-                                alert("Error syncing Google user metadata: " + err.message);
-                            });
-                        }
-                    }).catch((error) => {
-                        loaderScreen.style.display = 'none';
-                        alert("Database Verification Failure: " + error.message);
-                    });
-                })
-                .catch((error) => {
-                    loaderScreen.style.display = 'none';
-                    if (error.code !== 'auth/popup-closed-by-user') {
-                        alert("Google Handshake Failed: " + error.message);
-                    }
-                });
         });
 
         // --- FORGOT PASSWORD PROCESS ---
         document.getElementById('forgotForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            
             const userVal = document.getElementById('reset_username').value.trim();
             const newPass = document.getElementById('new_password').value;
 
@@ -582,6 +519,7 @@
                 if (snapshot.exists()) {
                     const updates = {};
                     updates[`users/${userVal}/password`] = newPass;
+                    
                     update(ref(db), updates).then(() => {
                         alert("Success: Password updated successfully!");
                         modal.style.display = 'none';
